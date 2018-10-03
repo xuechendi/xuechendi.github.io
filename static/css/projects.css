@@ -1,7 +1,7 @@
 /* Project Elements */
 .project-outer {
   display: inline-block;
-  width: 30%;
+  width: 45%;
   vertical-align: top;
   margin: 0 10px;
 }
@@ -46,7 +46,7 @@ span.tags:last-child {
   display: block;
 }
 .project-img {
-  width: 230px;
+  width: auto;
   height: 200px;
   display: block;
   background-size: cover;

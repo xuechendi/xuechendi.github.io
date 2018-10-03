@@ -1,10 +1,10 @@
-title: Stack Problems
-description: My Personal Stack Problems
-author: Agus Makmun
-github: https://github.com/agusmakmun
-about: I am freelance developer. Currently doing more in backend, focused in Python and Django.
-disqus_shortname: stackproblems
-google_analytics: UA-XXXXXXXX-Y
+title: Chendi Xue's blog
+description: blogs about techs and my westie puppy.
+author: Chendi Xue
+github: https://github.com/xuechendi
+about: I am linux software engineer, currently fosuing on bigdata, spark, kubernetes, ceph, and etc.
+disqus_shortname: xuechendi
+google_analytics: UA-69358033
 avatar_url: /static/img/avatar.jpg
 
 enableTags: true
@@ -16,20 +16,10 @@ collections:
     permalink: /project/:path/
 
 social:
-    - icon: fa-facebook
-      link: "#"
-    - icon: fa-twitter
-      link: "https://twitter.com/agusmakmun6"
     - icon: fa-linkedin
-      link: "https://www.linkedin.com/in/summonagus"
-    - icon: fa-stack-exchange
-      link: "#"
+      link: "https://www.linkedin.com/in/chendixue"
     - icon: fa-github
-      link: "https://github.com/agusmakmun"
-
-share:
-  twitter_username: agusmakmun6
-  fb_appid: 1749788565247320
+      link: "https://github.com/chendixue"
 
 urls:
     - text: About Me
@@ -39,7 +29,7 @@ urls:
     - text: XML Feed
       url: /feed.xml
 
-url: "https://agusmakmun.github.io"
+url: "https://xuechendi.github.io"
 baseurl: ""
 paginate: 20
 per_page: 20

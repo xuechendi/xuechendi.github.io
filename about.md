@@ -4,6 +4,8 @@ title: About
 permalink: /about/
 ---
 
-I am freelance developer. Currently doing more in backend, focused in Python and Django.
+I am a Linux Software Engineer, currently am focusing on Bigdata optimization and solution.
+Experienced with Hadoop, Spark, Kubernetes, S3A, Ceph, and etc.
+Skilled in programming with C/C++, Python, Ansible, familiar with Linux software profiling, debugging.
 
-email: agus[at]python.web.id
+Email: xuechendi@gmail.com
