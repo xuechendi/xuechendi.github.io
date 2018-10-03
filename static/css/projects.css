@@ -1,7 +1,8 @@
 /* Project Elements */
 .project-outer {
   display: inline-block;
-  width: 45%;
+  width: 90%;
+  max-width: 400px;
   vertical-align: top;
   margin: 0 10px;
 }
