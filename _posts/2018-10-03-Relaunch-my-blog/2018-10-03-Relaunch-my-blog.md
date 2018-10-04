@@ -1,8 +1,10 @@
 ---
-layout: post                          # (require) default post layout
-title: "New Journey"                   # (require) a string title
-date: 2018-10-03 00:00:00 -0400      # (require) a post date
-categories: [daily]          # (custom) some categories, but makesure these categories already exists inside path of `category/`
+layout: post
+title: "New Journey"
+date: 2018-10-03 00:00:00 -0400
+categories: [daily]
+abstract: "It's been a while since my last post, I am hoping to pick up this habbit and record my daily findings, ideas and tech summarization here.<br>...<br>"
+abstract_img: "/static/img/2018-10-03-New-Blog-Launched/favicon.jpg"
 ---
 
 It's been a while since my last post, I am hoping to pick up this habbit and record my daily findings, ideas and tech summarization here.

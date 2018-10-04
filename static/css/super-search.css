@@ -58,7 +58,7 @@
     width: calc(100% + 2px);
     padding: 1px;
     box-shadow: inset 0 0 0 1px #eee, 0 7px 10px rgba(0,0,0,0.05);
-    z-index: 1000;
+    z-index: 100;
 	background-color:#fff;
 	position: relative;
     clear: both;
