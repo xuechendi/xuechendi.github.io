@@ -10,36 +10,6 @@
         currentInputValue = '',
         lastSearchResultHash,
         posts = [];
-	
-	var store = [{
-    "title": "Documentation - Configuration & First Steps",
-    "link": "/docs/help/docmentation.html",
-    "image": null,
-    "date": "March 20, 2016",
-    "category": ["docs","help"],
-    "excerpt": "Configuration All configuration options are in the _config.yml file. Created by Patricia Mafra General Settings name: Your name. job_title: Your..."
-},{
-    "title": "Installation",
-    "link": "/docs/help/installation.html",
-    "image": null,
-    "date": "March 16, 2016",
-    "category": ["docs","help"],
-    "excerpt": "I assume you have already downloaded and installed Ruby. Here’s what you need to do next: Run gem install jekyll..."
-},{
-    "title": "What is Jekyll?",
-    "link": "/docs/what-is-jekyll.html",
-    "image": null,
-    "date": "March 15, 2016",
-    "category": ["docs"],
-    "excerpt": "Jekyll is a parsing engine bundled as a ruby gem used to build static websites from dynamic components such as..."
-},{
-    "title": "Sample Data",
-    "link": "/docs/sample-data.html",
-    "image": null,
-    "date": "March 11, 2016",
-    "category": ["docs"],
-    "excerpt": "Markdown (or Textile), Liquid, HTML &amp; CSS go in. Static sites come out ready for deployment. Headings Heading 1 Heading..."
-}]
 
 	// Changes XML to JSON
 	function xmlToJson(xml) {		
@@ -90,19 +60,27 @@
         findInSitemap(query, resultdiv);
 	})
 	
-	$('#search-input').focusout(function() {
-		$('#js-search__results').hide();
-		$('.show-results-count').text(0 + ' Results');
-		$('#search-input').val("");
-		$('.show-results-count').removeClass("active");
+	/*var evt;
+	document.onmousemove = function (e) {
+		e = e || window.event;
+		evt = e;
+	}*/
+	
+	$('#js-search').focusout(function(e) {
+		if (e.currentTarget.id != "js-search") { 
+			$('#js-search__results').hide();
+			$('.show-results-count').text(0 + ' Results');
+			$('#search-input').val("");
+			$('.show-results-count').removeClass("active");
+		}
 	})
 
 	function findInSitemap (keyword, resultdiv) {
 		$.ajax({
-			url: "sitemap.xml",
+			url: window.location.protocol + "//" + window.location.host + "/sitemap.xml",
 		}).done(function(data) {
 			var sitemap = xmlToJson(data);
-			console.log(sitemap);
+			//console.log(sitemap);
 			
 			var result = [];
 			$.each(sitemap.rss.channel.item, function(key, val){

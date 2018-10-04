@@ -6,7 +6,7 @@ comments: true
 categories: Linux 
 ---
 ###xml setting could be like below:
-```xml libvirt.xml
+```
     <domain type ="kvm">
       <uuid>1b87fb8f-442c-4682-b693-b38612342cd1</uuid>      // should be unique
       <name>node3_1 </name>
@@ -52,11 +52,11 @@ categories: Linux
 2. BIOS enables VT
 3. virsh create libvirt.xml
 4. virsh attach-device domain disk.xml
->	Create your own rbd device(rbd info volume-name)
->	According to below xml , attach your device 
+4.1 Create your own rbd device(rbd info volume-name)
+4.2 According to below xml , attach your device 
 
 ###disk xml could be like below: 
-```xml disk.xml   
+```   
     <disk type='network' device ='disk'>
       <driver name ='qemu' type='raw' cache='none' />
       <source protocol ='rbd' name='xiaoxi/volume-79ee1e33-0353-4e22-bf98-d81a91b2c283:debug_rbd=1:debug_client=1:debug_objecter=1:debug_striper=1:log_to_stderr=true' />
@@ -67,7 +67,7 @@ categories: Linux
     </disk>
 ```
 ###Using bridge as network interface: 
-```bash /etc/network/interfaces
+```
 #The primary network interface
 auto br0
 iface br0 inet dhcp
@@ -78,7 +78,7 @@ iface br0 inet dhcp
 ```
 <code>/etc/init.d/networking restart</code>
 
-```xml libvirt.xml using bridge
+```
 <domain type ="kvm">
   <uuid>1b87fb8f-442c-4682-b693-b3866dc20cd3 </uuid>
   <name>node2_1 </name>
@@ -117,7 +117,7 @@ iface br0 inet dhcp
 ```
 
 ###extra setting to apparmor: 
-```console
+```
 root@CephXCD1:~# tail -3 /etc/apparmor.d/abstractions/libvirt-qemu
   # for rbd
   /etc/ceph/ceph.conf r,
@@ -126,7 +126,7 @@ root@CephXCD1:~# service apparmor restart
 Setting vncserver & vncviewer: 
 ```
 ###install vncserver in your hyperviser
-```console
+```
 root@CephXCD1:~# apt-get install vnc4server
 root@CephXCD1:~# adduser vnc
 root@CephXCD1:~# /etc/init.d/vncserver

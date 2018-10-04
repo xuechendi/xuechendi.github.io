@@ -79,7 +79,7 @@ DM Devices in Ubuntu 12.10,kernel 3.6.3
 
 Linear Device target-type example
 
-``` c linear-device-struct
+```
 static struct target_type linear_target = {   
 	.name   = "linear",   
 	.version = {1, 1, 0},   
@@ -96,7 +96,7 @@ static struct target_type linear_target = {   
 
 ### Let's see the codes
 
-``` c How DM handle the device creation command?
+```
 int dm_create(int minor, struct mapped_device **result){
    	struct mapped_device *md;
     	md = alloc_dev(minor);   	
@@ -108,7 +108,7 @@ int dm_create(int minor, struct mapped_device **result){
 }
 ```
 
-``` c How DM handle the read/write command? 
+```
 static void dm_request(struct request_queue *q, struct bio *bio)
 {
 	struct mapped_device *md = q->queuedata;

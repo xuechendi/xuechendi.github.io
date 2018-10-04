@@ -54,7 +54,7 @@
 	font: 400 16px/16px "Roboto Condensed", Arial, sans-serif;	
 }
 
-#js-search .search__results {
+#js-search #js-search__results {
     width: calc(100% + 2px);
     padding: 1px;
     box-shadow: inset 0 0 0 1px #eee, 0 7px 10px rgba(0,0,0,0.05);
@@ -72,16 +72,16 @@ input#js-search__input {
 .is-active .search__input {
   transform: translateY(0);
 }
-.search__results.is-hidden {
+#js-search__results.is-hidden {
   opacity: 0;
   transform: translateY(-1vh);
   display: none;
 }
-.search__results > li {
+#js-search__results > li {
   border-top: 1px solid #f0f0f0;
   overflow-x: hidden;
 }
-.search__results > li > a {
+#js-search__results > li > a {
   display: block;
   padding: 10px;
 }
