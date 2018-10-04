@@ -40,7 +40,6 @@ a:hover {
 
 /* Layout */
 .main-layout {
-  background: #fff;
 }
 .sidebar-nav {
   margin: 0;
@@ -79,6 +78,24 @@ footer {
   font-size: 11px;
   bottom: 0;
   padding-bottom: 10px;
+}
+
+div.row-header-1 {
+	width: 100%;
+	height: 20px;
+	background-color: #bbb;
+}
+
+div.col-right-header {
+	width:100%;
+	height: 50px;
+}
+
+div.col-right-content {
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 20px;
+  margin-top: 20px;
 }
 
 /* Left column */

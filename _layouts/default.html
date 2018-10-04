@@ -113,6 +113,7 @@ layout: compress
     {% endif %}
   </head>
   <body>
+  	<div class="row-header-1">	</div>
     <div class="container">
       <div class="col-sm-3">
         <div class="fixed-condition">
@@ -130,10 +131,6 @@ layout: compress
               {% endfor %}
             </ul>
           </div>
-          <div class="search" id="js-search">
-            <input type="text" placeholder="(sitemap)~$ type to search" class="search__input form-control" id="js-search__input">
-            <ul class="search__results" id="js-search__results"></ul>
-          </div>
           <hr />
           <ul class="sidebar-nav">
             <strong>Navigation</strong>
@@ -146,7 +143,19 @@ layout: compress
         <!-- end /.fixed-condition -->
       </div>
       <div class="col-sm-8 col-offset-1 main-layout">
+		<div class="col-right-header"></div>
+		<div class="search" id="js-search">
+		  <div>
+			<div class="show-results-count">0 Results</div>
+			<div class="search-holder clear">
+				<input type="text" id="search-input" placeholder="search for... press enter to start" class="search__input form-control" id="js-search__input">
+	        </div>
+		  </div>
+		  <ul class="search__results" id="js-search__results"></ul>
+        </div>
+		<div class="col-right-content">
         {{ content }}
+		</div>
         <footer>
           &copy; {{ site.author }}
           {% if site.github %}

@@ -40,7 +40,6 @@ markdown: kramdown
 plugins:
   - jekyll-paginate
   - jekyll-gist
-  - jekyll-postfiles
 
 compress_html:
   clippings: all
