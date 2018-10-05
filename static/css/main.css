@@ -178,6 +178,47 @@ div.col-sm-3 img.profile-avatar {
   max-width: 100%
 }
 
+div.content-calendar {
+	width: 90%;
+	margin:0 5% 0 5%;
+}
+
+div.content-calendar div.content-calendar-title {
+	color: #3fa757;
+	margin-bottom: 5px;
+}
+
+div.content-calendar table {
+	border: 1px solid #888;
+	width: 100%;
+	table-layout: fixed;
+	font-size:14px;
+}
+div.content-calendar table thead tr{
+	
+}
+
+div.content-calendar table thead td{
+	background-color:#ddd;
+	padding: 0 3px 0 3px;
+	overflow: hidden;
+}
+
+div.content-calendar table tbody tr{
+	
+}
+
+div.content-calendar table tbody td{
+	border: 1px solid #888;
+	width: 14%;
+	padding: 0 3px 0 3px;
+	overflow-wrap: break-word;
+}
+
+div.content-calendar table tbody td.active{
+	background-color: yellow;
+}
+
 div.content-post-block {
 	
 }

@@ -20,7 +20,9 @@ social:
     - icon: fa-linkedin
       link: "https://www.linkedin.com/in/chendixue"
     - icon: fa-github
-      link: "https://github.com/chendixue"
+      link: "https://github.com/xuechendi"
+    - icon: fa-instagram
+      link: "https://www.instagram.com/xuechendi/"
 
 urls:
     - text: About Me
