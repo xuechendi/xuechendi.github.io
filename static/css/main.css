@@ -203,7 +203,10 @@ div.content-post-title {
 }
 
 div.content-post-abstract {
-	max-height: 200px;
+	overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;  
 }
 
 /* Responsive Conditional */
