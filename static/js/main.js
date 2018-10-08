@@ -10,5 +10,5 @@
 		if(selector.text() != "Done") {
 			selector.text("In Progress");
 		}
-	});	
+	});
 })(jQuery)
