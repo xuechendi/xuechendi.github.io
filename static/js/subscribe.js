@@ -3,7 +3,7 @@
 	function subscribe_to_server () {
 		var email = $("#subscribe-input").val();
 		$.ajax({
-			url: "http://ec2-13-59-71-153.us-east-2.compute.amazonaws.com/subscribe",
+			url: "https://ec2-13-59-71-153.us-east-2.compute.amazonaws.com:80/subscribe",
 			type: 'post',
 			dataType: 'text',
 			data: email
@@ -15,7 +15,7 @@
 	function unsubscribe_to_server () {
 		var email = $("#subscribe-input").val();
 		$.ajax({
-			url: "http://ec2-13-59-71-153.us-east-2.compute.amazonaws.com/unsubscribe",
+			url: "https://ec2-13-59-71-153.us-east-2.compute.amazonaws.com:80/unsubscribe",
 			type: 'post',
 			dataType: 'text',
 			data: email
@@ -34,7 +34,7 @@
 	
 	$(document).ready(function(){
 		$.ajax({
-			url: "http://ec2-13-59-71-153.us-east-2.compute.amazonaws.com/subscribe_status",
+			url: "https://ec2-13-59-71-153.us-east-2.compute.amazonaws.com:80/subscribe_status",
 			type: 'get',
 			dataType: 'text'
 		}).done(function(data) {
