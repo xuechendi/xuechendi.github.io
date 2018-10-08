@@ -250,6 +250,42 @@ div.content-post-abstract {
     -webkit-box-orient: vertical;  
 }
 
+div.subscribe-block {
+	width: 90%;
+	margin:0 5% 0 5%;
+	height: 100px;
+}
+
+div.subscribe-block .subscribe-block-status p {
+	display: inline;
+	color: #3fa757;
+	font-weight:900;
+	font-size:18px;
+}
+
+div.subscribe-block .subscribe-block-input {
+	float:left;
+}
+
+div.subscribe-block .subscribe-block-input #subscribe-input {
+	min-width: 275px;
+	margin-right: 45px;
+}
+
+div.subscribe-block .subscribe-block-button {
+	float:left;
+	min-width: 200px;
+}
+
+div.subscribe-block .subscribe-block-button div {
+	float:left;
+	margin:2% 6% 0 0%;
+}
+
+div.subscribe-block .subscribe-block-feedback {
+	clear: both;
+}
+
 /* Responsive Conditional */
 @media (min-width: 1024px) {
   .fixed-condition {

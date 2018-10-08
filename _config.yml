@@ -29,8 +29,8 @@ urls:
       url: /about/
     - text: My Projects
       url: /projects/
-    - text: XML Feed
-      url: /feed.xml
+    - text: Subscribe
+      url: /subscribe
 
 url: "https://xuechendi.github.io"
 baseurl: ""
