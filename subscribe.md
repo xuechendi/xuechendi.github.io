@@ -4,7 +4,7 @@ title: Subscribe to this Blog!
 permalink: /subscribe/
 ---
 <div class = "subscribe-block">
-	<div class = "subscribe-block-status">Subscribed for <p>20</p> times till now!</div>
+	<div class = "subscribe-block-status">Subscribed for <div>20</div> times till now!</div>
 	<div class = "subscribe-block-input">
 	Email Address: <input type="text" id="subscribe-input" placeholder="yourname@email_server.com">
 	</div>

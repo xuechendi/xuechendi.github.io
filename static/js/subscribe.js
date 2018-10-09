@@ -3,7 +3,7 @@
 	function subscribe_to_server () {
 		var email = $("#subscribe-input").val();
 		$.ajax({
-			url: "https://ec2-13-59-71-153.us-east-2.compute.amazonaws.com:80/subscribe",
+			url: "https://xuechendi.us-east-2.elasticbeanstalk.com/subscribe",
 			type: 'post',
 			dataType: 'text',
 			data: email
@@ -15,7 +15,7 @@
 	function unsubscribe_to_server () {
 		var email = $("#subscribe-input").val();
 		$.ajax({
-			url: "https://ec2-13-59-71-153.us-east-2.compute.amazonaws.com:80/unsubscribe",
+			url: "https://xuechendi.us-east-2.elasticbeanstalk.com/unsubscribe",
 			type: 'post',
 			dataType: 'text',
 			data: email
@@ -34,11 +34,11 @@
 	
 	$(document).ready(function(){
 		$.ajax({
-			url: "https://ec2-13-59-71-153.us-east-2.compute.amazonaws.com:80/subscribe_status",
+			url: "https://xuechendi.us-east-2.elasticbeanstalk.com/subscribe_status",
 			type: 'get',
 			dataType: 'text'
 		}).done(function(data) {
-			$("div.subscribe-block-status p").text(data);
+			$("div.subscribe-block-status div").text(data);
 		});
 	});
 })(jQuery)

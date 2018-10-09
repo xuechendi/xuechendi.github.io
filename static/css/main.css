@@ -256,7 +256,7 @@ div.subscribe-block {
 	height: 100px;
 }
 
-div.subscribe-block .subscribe-block-status p {
+div.subscribe-block .subscribe-block-status div {
 	display: inline;
 	color: #3fa757;
 	font-weight:900;
