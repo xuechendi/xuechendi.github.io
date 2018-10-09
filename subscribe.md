@@ -3,13 +3,11 @@ layout: page
 title: Subscribe to this Blog!
 permalink: /subscribe/
 ---
-<div class = "subscribe-block">
-	<div class = "subscribe-block-status">Subscribed for <div>20</div> times till now!</div>
-	<div class = "subscribe-block-input">
-	Email Address: <input type="text" id="subscribe-input" placeholder="yourname@email_server.com">
-	</div>
-	<div class = "subscribe-block-button">
-	<div id="subscribe-block-button-sub"><a href="#">Subscribe</a></div><div id="subscribe-block-button-unsub"><a href="#">Unsubscribe</a></div>
-	</div>
-	<div class = "subscribe-block-feedback"></div>
-</div>
+ <form style="border:2px solid #ccc;padding:3px;text-align:center; background-color:#eee;" action="https://tinyletter.com/xuechendi" method="post" target="popupwindow" onsubmit="window.open('https://tinyletter.com/xuechendi', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true">
+	 <p><label for="tlemail">Enter your email address</label></p>
+	 <p><input type="text" style="width:100%; max-width:300px;" name="email" id="tlemail" /></p>
+	 <input type="hidden" value="1" name="embed"/>
+	 <input type="submit" value="Subscribe" />
+	 <p><a href="https://tinyletter.com" target="_blank">powered by TinyLetter</a></p>
+ </form>
+
