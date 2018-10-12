@@ -38,6 +38,7 @@ When you use PMDK to access Persisten memory or even a in-memory temp file for e
 
 As a foundation, PMDK uses transation to read and write, we submit our lambda function to PMDK, it will keep data being read and written consistenly (In the right sequence, and no partially dirty issue), once the data committed, PMDK calls our lambda function to call our next step (Or wake/notify up your waiting thread).
 
+<img alt="PMDK OVERVIEW" src="/static/img/2018-10-10-PMDK/PMDK_1.png" style="width: 300px">
 <br>
 ## PART TWO ##
 ***
@@ -174,54 +175,67 @@ Find data: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
 #### java EXAMPLE ####
 Java PMDK API called llpl, you can refer to [PMDK Notes 1: How to install](/2018/10/10/PMDK-Tutorial-1-How-to-install) for install details.
-The example we used is in LLPL examples. llpl/src/examples/string_store/Writer.java
 
 ``` java
-/*
- * Copyright (C) 2018 Intel Corporation
- *
- * SPDX-License-Identifier: BSD-3-Clause
- *
- */
-
 package examples.string_store;
 
 import lib.llpl.*;
 import java.io.Console;
+import java.util.Arrays;
+import sun.misc.Unsafe;
 
 public class Writer {
     public static void main(String[] args) {
-        /* open and create persistent memory device */
-        Heap h = Heap.getHeap("/mnt/mem/persistent_pool", 2147483648L);
+        /*
+        open and create persistent_pool file
+        */
+        Heap h = Heap.getHeap("/mnt/mem/persistent_pool", 1024*1024*1024L);
 
         Console c = System.console();
-        if (c == null) {
-            System.out.println("No console.");
-            System.exit(1);
-        }
+        c.readLine("press Enter to start");
 
-        String str = c.readLine("Inset your test string: ");
+        byte[] bytes = {(byte)'a', (byte)'b', (byte)'c', (byte)'d', (byte)'e',
+                        (byte)'f', (byte)'g', (byte)'h', (byte)'i', (byte)'j',
+                        (byte)'k', (byte)'l', (byte)'m', (byte)'n', (byte)'o',
+                        (byte)'p', (byte)'q', (byte)'r', (byte)'s', (byte)'t'};
+        int length = bytes.length;
 
-        /* Allocate a memory chunk */
-        MemoryBlock<Transactional> mr = h.allocateMemoryBlock(Transactional.class, Integer.BYTES + str.length());
+        /*
+        allocate a memory chunk from persistent pool
+        */
+        MemoryBlock<Transactional> mr = h.allocateMemoryBlock(Transactional.class, Integer.BYTES + length);
 		
-        byte[] bytes = str.getBytes();
-        mr.setInt(0, str.length());
-        for (int i = 0; i < str.length(); i++) {
-            /* besides using setByte to set per Byte,
-               users can use copyToArray to set multiple
-               bytes one time */
-            mr.setByte(Integer.BYTES + i, bytes[i]);
-        }
+        /*
+        copy bytes array to persistent memory
+        */
+        mr.copyFromArray(bytes, 0, 0, length);
 
-        /* set this mr pointer as the root one, 
-           so next by using getRoot() func, 
-           root pointer will shows this pointer
-           and it also points to next pointer
-           and you find them all */
+        /*
+        set the memory block as root, 
+        and this memory block should point to the next, 
+        so you can find any memory block after restart program
+        */
         h.setRoot(mr.address());
 
-        System.out.println("String \"" + str + "\" successfully written.");
+        System.out.println("String successfully written.");
+
+        /*
+        get the actual address in memory of our data
+        To check if it is correct.
+        we check the value indexed of 10. Which is k
+        */
+        long addr = mr.payloadAddress(10);
+        Unsafe UNSAFE;
+        try {
+            java.lang.reflect.Field f = Unsafe.class.getDeclaredField("theUnsafe");
+            f.setAccessible(true);
+            UNSAFE = (Unsafe)f.get(null);
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Unable to initialize UNSAFE.");
+        }
+        byte res = UNSAFE.getByte(addr);
+        System.out.println("Address 10 is " + (char)res);
     }
 }
 ```
@@ -241,21 +255,9 @@ java -ea -cp ../target/classes:lib:target/test_classes:./ -Djava.library.path=..
 [Program output]:
 
 ``` bash
-Inset your test string: hello, pmdk
-String "hello, pmdk" successfully written.
-```
-
-Verify
-
-``` bash
-cd llpl/src
-java -ea -cp ../target/classes:lib:target/test_classes:./ -Djava.library.path=../target/cppbuild examples/string_store/Reader
-```
-
-[Program output]:
-
-``` bash
-Found string "hello, pmdk".
+press Enter to start
+String successfully written.
+Address 10 is k
 ```
 
 <br>

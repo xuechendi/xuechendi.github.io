@@ -2,7 +2,7 @@
 layout: post_with_embed
 title: "Ways to post codes on Jekyll"
 date: 2018-10-03 00:00:00 -0400
-categories: [web]
+categories: [Website]
 abstract: "I noticed there are many ways to post codes in Jekyll, such as iframe or embed. <br>So I tried some in this post, by using leetcode, jupyter through gist and pure C codes through gist. <br>I prefer first two options, they are both wonderful for different scenarios, if I want to make my codes testable, I can use leetcode playground. If I want to explain the codes and show output step by step, jupyter version is a great option."
 abstract_img: "/static/img/2018-10-04-iframe-jupyter-trial/jupyter_jekyll.jpg"
 ---

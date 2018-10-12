@@ -1,8 +1,8 @@
 title: Chendi Xue's blog
-description: blogs about techs and my westie puppy.
+description: Chendi Xue's blog about spark, kubernetes, ceph, c/c++ and etc.
 author: Chendi Xue
 github: https://github.com/xuechendi
-about: I am linux software engineer, currently fosuing on bigdata, spark, kubernetes, ceph, and etc.
+about: I am linux software engineer, currently fosuing on spark, kubernetes, ceph, c/c++, and etc.
 disqus_shortname: xuechendi
 google_analytics: UA-69358033
 avatar_url: /static/img/avatar.jpg

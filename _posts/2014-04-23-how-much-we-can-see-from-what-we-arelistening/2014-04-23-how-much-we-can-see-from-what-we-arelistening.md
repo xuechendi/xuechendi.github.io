@@ -3,7 +3,7 @@ layout: post
 title: "How much we can see from what we are listening"
 date: 2014-04-23 13:01
 comments: true
-categories: daily
+categories: Daily
 ---
 
 Just write this post to see(literally see) how much differences there are in a compressed mp3 with lossless FLAC and WAV.
