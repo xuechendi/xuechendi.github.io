@@ -223,6 +223,16 @@ div.content-post-block {
 	
 }
 
+div.content-post-category {
+	font-size: 20px;
+	font-weight:900;
+	margin-bottom: 10px;
+}
+
+div.content-post-block-shift {
+	margin-left:40px;
+}
+
 div.content-posts hr {
 	margin:10px 0 10px 0;
 }
@@ -241,6 +251,10 @@ div.content-post-tag {
 div.content-post-title {
 	float: left;
 	margin-left: 5px;
+}
+
+div.content-post-clear {
+	clear: both;
 }
 
 div.content-post-abstract {

@@ -3,7 +3,7 @@ layout: post
 title: "VM Creation by Virsh"
 date: 2013-12-12 14:34
 comments: true
-categories: Linux 
+categories: [Linux]
 ---
 ###xml setting could be like below:
 ```

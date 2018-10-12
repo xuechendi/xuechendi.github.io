@@ -29,6 +29,8 @@ urls:
       url: /about/
     - text: My Projects
       url: /projects/
+    - text: Category
+      url: /category
     - text: Subscribe
       url: /subscribe
 

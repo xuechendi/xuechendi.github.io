@@ -3,7 +3,7 @@ layout: post
 title: "Device-Mapper deep dive"
 date: 2013-11-14 19:40
 comments: true
-categories: [Linux, Storage]
+categories: [Linux]
 ---
 I used to stuck in all these terms and concepts for like really long time, just trying to get everything clear by writing.
 

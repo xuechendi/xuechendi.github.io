@@ -2,7 +2,7 @@
 layout: post
 title: "Persisten Memory Development Kit(PMDK) Notes 1: How to install"
 date: 2018-10-10
-categories: [c/c++, persistent memory, compile, java, PMDK]
+categories: [PMDK]
 abstract: "PMDK is super cool, if you missed the introduction, please go to <a href='/2018/10/10/PMDK-Tutorial-0-What-it-is'>PMDK Notes 0: what it is and quick examples</a> to have a ramp up. For this blog, I wrote down all my steps to build up a PMDK with its c++ api and java api in my Centos 7.3 system."
 abstract_img: ""
 ---
