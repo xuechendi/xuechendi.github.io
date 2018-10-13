@@ -32,13 +32,13 @@
 		unsubscribe_to_server ();
 	});
 	
-	$(document).ready(function(){
+	function get_subscribe_status () {
 		$.ajax({
 			url: "https://ec2-18-191-213-11.us-east-2.compute.amazonaws.com/subscribe_status",
 			type: 'get',
 			dataType: 'text'
 		}).done(function(data) {
-			$("div.subscribe-block-status div").text(data);
+			$("div.subscribe-block-status").text(data);
 		});
-	});
+	}
 })(jQuery)
