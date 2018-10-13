@@ -38,7 +38,7 @@ When you use PMDK to access Persisten memory or even a in-memory temp file for e
 
 As a foundation, PMDK uses transation to read and write, we submit our lambda function to PMDK, it will keep data being read and written consistenly (In the right sequence, and no partially dirty issue), once the data committed, PMDK calls our lambda function to call our next step (Or wake/notify up your waiting thread).
 
-<img alt="PMDK OVERVIEW" src="/static/img/2018-10-10-PMDK/PMDK_1.png" style="width: 300px">
+<img alt="PMDK OVERVIEW" src="/static/img/2018-10-10-PMDK/PMDK_1.png" style="width:100%; max-width: 300px">
 <br>
 ## PART TWO ##
 ***

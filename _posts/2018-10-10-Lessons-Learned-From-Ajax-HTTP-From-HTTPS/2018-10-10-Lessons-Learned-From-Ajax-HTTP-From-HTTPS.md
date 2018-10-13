@@ -40,7 +40,7 @@ abstract_img: "/static/img/2018-10-10-Lessons-Learned-From-Ajax-HTTP-From-HTTPS/
 I am building my jekyll blog portal recently on github, and since github is static, while I still want to add some cool features who can not be simply implemented by javascript inside browser, I came up this thought, <strong> can I ajax to my amazon EC2 virtual machine to handle some dynamic requests? </strong>
 
 And I have this image in my mind.
-<img alt="From-Ajax-HTTP-From-HTTPS" src="/static/img/2018-10-10-Lessons-Learned-From-Ajax-HTTP-From-HTTPS/IMG_2254.JPG" style="max-width: 300px">
+<img alt="From-Ajax-HTTP-From-HTTPS" src="/static/img/2018-10-10-Lessons-Learned-From-Ajax-HTTP-From-HTTPS/IMG_2254.JPG" style="width:100%; max-width: 300px">
 
 #### Then let's consider this idea for a bit: ####
 
@@ -98,7 +98,7 @@ openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
 And then provide this key to your web server process.
 
 But, a self-assigned key is just like a self-assigned job title, no one believes you since the title is not authorized.
-<img alt="browser server talk" src="/static/img/2018-10-10-Lessons-Learned-From-Ajax-HTTP-From-HTTPS/IMG_2256.PNG" style="max-width: 350px">
+<img alt="browser server talk" src="/static/img/2018-10-10-Lessons-Learned-From-Ajax-HTTP-From-HTTPS/IMG_2256.PNG" style="width:100%; max-width: 350px">
 
 So, if I hosting a https website with a self-assigned certificate, Browser will try to warn visitors and even worse, if I browser such a site with my iphone, safari simply declined with no asking...
 
