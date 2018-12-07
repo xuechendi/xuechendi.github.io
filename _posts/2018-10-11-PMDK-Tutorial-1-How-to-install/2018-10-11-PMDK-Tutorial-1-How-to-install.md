@@ -155,10 +155,21 @@ make -j
 
 * mount a EMULATING PERSISTENT MEMORY or PERSISTENT MEMORY and run tests
 
+[Pmem official doc: How to emulate Persistent Memory]https://pmem.io/2016/02/22/pm-emulation.html
+
 ``` bash
-mkdir -p /mnt/mem
-mount -t tmpfs -o size=4G tmpfs /mnt/mem
-chmod -R a+rw /mnt/mem
+# sudo vi /etc/default/grub
+GRUB_CMDLINE_LINUX="memmap=60G!4G"  #60G is pmem size, 4G is start offset
+On BIOS-based machines:
+# sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+On UEFI-based machines:
+# sudo grub2-mkconfig -o /boot/efi/EFI/centos/grub.cfg
+
+# REBOOT system
+
+sudo mkdir /mnt/mem
+sudo mkfs.xfs /dev/pmem0
+sudo mount -o dax /dev/pmem0 /mnt/mem
 make tests
 cd ..
 ```
