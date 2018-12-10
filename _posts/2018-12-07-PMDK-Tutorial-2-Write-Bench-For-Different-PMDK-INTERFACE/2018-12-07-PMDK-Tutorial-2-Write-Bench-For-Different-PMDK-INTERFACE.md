@@ -32,6 +32,250 @@ options:
 
 ```
 
+#### libpmemobj implementation
+
+``` c++
+class Writer {
+public:
+    Writer(Monitor* mon, string dev, int bs, int thread_num):
+        mon(mon),
+        inflight(0),
+        block_size(bs * 1024 * 1024),
+        thread_num(thread_num) {
+        /* Open and create in persistent memory device */
+        printf("benchmark on %s, block size: %dMB, thread number: %d\n", dev.c_str(), bs, thread_num);
+
+        const char *pool_layout_name = "libpmemobj_persistent_heap";
+        pmpool = pmemobj_open(dev.c_str(), pool_layout_name);
+        if (pmpool == NULL) {
+            pmpool = pmemobj_create(dev.c_str(), pool_layout_name, 0, S_IRUSR | S_IWUSR);
+        }
+        if (pmpool == NULL) {
+            printf("Failed to open pool %s\n", pmemobj_errormsg());
+            fflush(stdout);
+            exit(-1);
+        }
+
+        for (int i = 0; i < thread_num; i++) {
+            thread_pool.push_back(thread(&Writer::run, this));
+        }
+    }
+
+    ~Writer() {
+        pmemobj_close(pmpool);
+    }
+
+    void stop() {
+        for (auto it = thread_pool.begin(); it != thread_pool.end(); it++) {
+            it->join();
+        }
+    }
+
+private:
+    vector<thread> thread_pool;
+    PMEMobjpool *pmpool;
+    uint64_t block_size;
+    Monitor* mon;
+    int thread_num;
+    int inflight;
+    std::mutex mtx;
+    std::condition_variable cv;
+
+    void run() {
+        std::unique_lock<std::mutex> lck(mtx);
+        while (mon->is_alive()) {
+            exec();
+            inflight++;
+            while (inflight > thread_num) cv.wait(lck);
+        }
+    }
+
+    void exec() {
+        TX_BEGIN(pmpool) {
+            char* address = (char*)pmemobj_direct(pmemobj_tx_zalloc(block_size, 0));
+            pmemobj_tx_add_range_direct((const void *)address, block_size);
+            memset(address, 'a', block_size);
+
+            mon->incCommittedJobs();
+            inflight--;
+            cv.notify_all();
+            
+        } TX_ONABORT {
+            exit(1);
+        } TX_END
+    }
+
+};
+```
+
+#### libpmemobj++ implementation
+
+``` c++
+class Writer {
+public:
+    Writer(Monitor* mon, string dev, int bs, int thread_num):
+        mon(mon),
+        inflight(0),
+        block_size(bs * 1024 * 1024),
+        thread_num(thread_num) {
+        /* Open and create in persistent memory device */
+        printf("benchmark on %s, block size: %dMB, thread number: %d\n", dev.c_str(), bs, thread_num);
+        //pmpool = pool<MEMBLOCK>::open(dev.c_str(), "");
+        try {
+            pmpool = pool<MEMBLOCK>::open(dev.c_str(), "");
+        } catch (...) {
+            pmpool = pool<MEMBLOCK>::create(dev.c_str(), "", 0, S_IRWXU);
+        }
+        block_ptr = pmpool.root();
+
+        for (int i = 0; i < thread_num; i++) {
+            thread_pool.push_back(thread(&Writer::run, this));
+        }
+    }
+
+    ~Writer() {
+        pmpool.close();
+    }
+
+    void stop() {
+        for (auto it = thread_pool.begin(); it != thread_pool.end(); it++) {
+            it->join();
+        }
+    }
+
+private:
+    vector<thread> thread_pool;
+    pool<MEMBLOCK> pmpool;
+    persistent_ptr<MEMBLOCK> block_ptr;
+    uint64_t block_size;
+    Monitor* mon;
+    int thread_num;
+    int inflight;
+    std::mutex mtx;
+    std::condition_variable cv;
+    
+
+    void run() {
+        std::unique_lock<std::mutex> lck(mtx);
+        while (mon->is_alive()) {
+            exec();
+            inflight++;
+            while (inflight > thread_num) cv.wait(lck);
+        }
+    }
+
+    void exec() {
+	    transaction::run(pmpool, [&] {
+            /* Data structure looks like below
+            MEMBLOCK0(root) -> MEMBLOCK1 -> MEMBLOCK2 -> ...
+                ||                 ||           ||
+                \/                 \/           \/
+              char[]              char[]       char[]
+            */
+            auto next_block_ptr = make_persistent<MEMBLOCK>();
+            auto data_ptr = make_persistent<char[]>(block_size);
+            block_ptr->value_ptr = data_ptr;
+            block_ptr->size = block_size;
+            block_ptr->next = next_block_ptr;
+            block_ptr = next_block_ptr;
+
+            /* To write something, just like doing to a memory pointer */
+            char* data_in_mem_ptr = data_ptr.get();
+            memset(data_in_mem_ptr, 'a', block_size);
+
+            mon->incCommittedJobs();
+            inflight--;
+            cv.notify_all();
+        });
+
+    }
+};
+```
+
+***
+
+#### JAVA write benchmark codes using [llpl](https://github.com/xuechendi/llpl
+
+``` bash
+# compile with
+javac -cp {$llpl_path}/llpl/target/classes:/usr/share/java/apache-commons-cli.jar examples/Writer.java
+```
+
+``` bash
+# create a shortcut script
+vim llpl_write_bench
+#!/usr/bin/sh
+java -ea -cp {$llpl_path}/llpl/target/classes:lib:target/test_classes:./:/usr/share/java/apache-commons-cli.jar -Djava.library.path={$llpl_path}/llpl/target/cppbuild {$llpl_path}/llpl/examples/Writer $@
+```
+
+``` bash
+./llpl_write_bench -bs 2 -d /dev/dax0.0,/dev/dax1.0 -s 80 -t 1
+
+usage: utility-name
+ -bs,--block_size <arg>   block size for each request
+ -d,--device <arg>        pmem device path
+ -s,--size <arg>          input total data size(GB)
+ -t,--thread_num <arg>    parallel threads number
+```
+
+#### llpl implementation
+
+``` java
+    synchronized MemoryBlock<Transactional> allocateMemory(long length) {
+        return this.h.allocateMemoryBlock(Transactional.class, Integer.BYTES + length);
+    }
+
+    private void write() {
+	int length = this.bytes.length;
+	MemoryBlock<Transactional> mr = allocateMemory(length);
+        mr.copyFromArray(this.bytes, 0, 0, length);
+        this.monitor.incCommittedJobs();
+    }
+
+    public void run(String dev, int bs, long size, int thread_num) {
+	    this.device = dev;
+	    this.size = size;
+	    this.thread_num = thread_num;
+        System.out.println("Thread Num: " + this.thread_num + ", Data size: " + this.size + "MB, Device: " + dev);
+        this.h = Heap.getHeap(dev, 1024*1024*1024L);
+	    // multi write to aep for testing
+
+        /*Console c = System.console();
+        c.readLine("press Enter to start");*/
+        
+        bytes = new byte[bs * 1024 * 1024];
+        Arrays.fill(this.bytes, (byte)'a');
+       
+        long total_jobs = this.size / bs;
+
+	    long remained_jobs = total_jobs;
+
+
+        System.out.println("Start to run, total jobs: " + total_jobs);
+	    this.executor = Executors.newFixedThreadPool(this.thread_num);
+	    while (remained_jobs > 0) {
+          this.executor.submit(this::write);
+	      remained_jobs -= 1;
+	    }
+    }
+
+    public void wait_to_stop() {
+	try {
+	    this.executor.awaitTermination(60, TimeUnit.SECONDS);
+	} catch (InterruptedException ie) {
+        this.executor.shutdown();
+	}
+        System.out.println("Completed!");
+    }
+
+    public void stop() {
+        this.executor.shutdown();
+    }
+```
+
+***
+#### completed version
+
 ``` c++
 #include <iostream>
 #include <string>
