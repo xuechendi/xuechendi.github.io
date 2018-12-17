@@ -1,31 +1,31 @@
 [
 	{
 		"day": "Monday",
-		"plan":"LeetCode",
+		"plan":"Workday",
 		"status":"Not Started"
 	},{
 		"day": "Tuesday",
-		"plan":"Data Processing",
+		"plan":"Workday",
 		"status":"Not Started"
 	},{
 		"day": "Wednesday",
-		"plan":"GRE",
+		"plan":"Workday",
 		"status":"Not started"
 	},{
 		"day": "Thursday",
-		"plan":"LeetCode",
+		"plan":"Workday",
 		"status":"Not started"
 	},{
 		"day": "Friday",
-		"plan":"Youtube channel",
+		"plan":"Workday",
 		"status":"Not started"
 	},{
 		"day": "Saturday",
-		"plan":"Data processing",
+		"plan":"Playday",
 		"status":"Not started"
 	},{
 		"day": "Sunday",
-		"plan":"GRE",
+		"plan":"Playday",
 		"status":"Not started"
 	}
 ]
