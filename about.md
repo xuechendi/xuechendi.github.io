@@ -6,9 +6,9 @@ permalink: /about/
 <style>
 p {margin-right:20px; display:inline;}
 </style>
-I am a Linux Software Engineer, currently am focusing on Bigdata optimization and solution.
-Experienced with Hadoop, Spark, Kubernetes, S3A, Ceph, and etc.
-Skilled in programming with C/C++, Python, Ansible, familiar with Linux software profiling, debugging.
+I am a Linux Software Engineer, currently working on Bigdata platform optimization and solution.
+Experienced in Hadoop, Spark, Kubernetes, S3A, Ceph, and etc.
+Skilled in programming with C/C++, Python, Ansible, Linux profiling, debugging.
 <BR><br>
 Email: xuechendi@gmail.com
 
@@ -23,7 +23,7 @@ Email: xuechendi@gmail.com
 </ul>
 <br>
 <hr>
-<h3>WORKING EXPERIENCE</h3>
+<h3>WORK EXPERIENCE</h3>
 <div style="width:100%;">
 	<div style="width:50%;"><p>2014.7 - Present</p><p>Intel</p><p>Software Engineer</p></div>
 	<div style="padding-left:5%;">
@@ -61,6 +61,8 @@ Email: xuechendi@gmail.com
 <div style="width:100%;">
 	<div style="padding-left:5%;">
 		<ul>
+		    <li><p>2019</p><p><a href="https://software.intel.com/en-us/articles/speed-big-data-analytics-on-the-cloud-with-an-in-memory-data-accelerator">Speed Big Data Analytics on the Cloud with an In-Memory Data Accelerator</a></p></li>
+			<li><p>2018</p><p><a href="https://software.intel.com/en-us/articles/unlock-big-data-analytics-efficiency-with-compute-and-storage-disaggregation-on-intel">Unlock Big Data Analytics Efficiency with Compute and Storage Disaggregation on Intel® Platforms</a></p></li>
 			<li><p>2018</p><p><a href="https://software.intel.com/en-us/articles/hdcs-hyper-converged-distributed-cache-storage-with-intel-3d-xpoint-technology-accelerates">HDCS: Hyper-Converged Distributed Cache Storage with Intel® 3D XPoint™ Technology Accelerates Cloud Applications</a></p></li>
 			<li><p>2018</p><p><a href="https://software.intel.com/en-us/articles/using-intel-optane-technology-with-ceph-to-build-high-performance-cloud-storage-solutions">Using Intel® Optane™ Technology with Ceph* to Build High-Performance Cloud Storage Solutions on Intel® Xeon® Scalable Processors</a></p></li>
 			<li><p>2016</p><p><a href="https://www.snia.org/sites/default/files/SDC/2016/presentations/cloud/ChendiXu_Hyperconverge_Cache_sdc2016_r8.pdf">2016 Storage Developer Conference: Hyper Converged Cache Storage Infrastructure For Cloud</a></p></li>
