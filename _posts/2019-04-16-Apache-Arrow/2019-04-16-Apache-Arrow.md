@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Apache Arrow"
+title: "Optimize Spark (pyspark) with Apache Arrow"
 date: 2019-04-16
 categories: [Spark]
 abstract: "Apache Arrow is a standardized language-independent columnar memory format platform, implemented in c++ and providing interfaces in Python, java, etc. Aim of Apache Arrow is to provide a unified data structure for different projects and different process memeory space."
@@ -102,12 +102,11 @@ Ideas includes things below:
 
 Example code:
 ``` python
-
-df = spark.read.format(“images”).load(“s3://xxx/imagenet”)
-df = spark.read.format(“tfrecords”).load(“wasb://xxx/training”)
+df = spark.read.format("images").load("s3://xxx/imagenet")
+df = spark.read.format("tfrecords").load("wasb://xxx/training")
 ```
 
-[Speed up convertion from “spark dataframe” to “numpy arrays” for tensorflow by expose Arrow to spark as ArrowRDD](https://jira.apache.org/jira/browse/SPARK-26413)
+[Speed up convertion from "spark dataframe" to "numpy arrays" for tensorflow by expose Arrow to spark as ArrowRDD](https://jira.apache.org/jira/browse/SPARK-26413)
 
 ### Summarize
 
