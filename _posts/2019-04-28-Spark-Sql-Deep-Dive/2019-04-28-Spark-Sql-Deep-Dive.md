@@ -77,11 +77,12 @@ final class GeneratedIteratorForCodegenStage1 extends org.apache.spark.sql.execu
 		 org.apache.spark.sql.vectorized.ColumnVector columeVector_1 = columnarBatch.column(1);
 		 UTF8String  first_column = columeVector_0.getUTF8String(rowIdx_0);
 		 int second_column = columeVector_1.getInt(rowIdx_0);
-		 second_column += 1; // PLUS ONE is Processed by looping in per value in column!!!
+		 project_value_1 = second_column + 1;
+		 // PLUS ONE is Processed by looping in per value in column!!!
 	  }
       // write to result
 	  result.write(0, first_column);
-	  result.write(1, second_column);
+	  result.write(1, project_value_1);
 	  
 	  batchIdx = numRows;
 	  batchscan_nextBatch_0(); // get next item in Iterator as columeBatch
@@ -94,20 +95,51 @@ final class GeneratedIteratorForCodegenStage1 extends org.apache.spark.sql.execu
 }
 ```
 
+There is only one code gen stage, Although this is pyspark script, since plus_one is simple, it handled as expression inside JVM.
+
+![orc test stage view](/static/img/2019-04-28-Spark-Sql-Deep-Dive/orc.png)
+
 ### Findings:
 1. When using orc or parquet as input data, org.apache.spark.sql.vectorized.ColumnarBatch and ColumnVector will be used.
-2. When using ColumnarBatch, each iterator Row will be a batch instead of one row of data.
-3. <b>For plus_one operation, data inside one columnarBatch will be processed row by row in a loop(CPU optimizable?).</b>
+2. <b>For plus_one operation, data was processed batch by batch then row by row inside one batch (CPU optimizable?).</b>
 
 ***
 
-### CSV data layout
+### orc with arrow
+
+[ORC with Arrow Generated codes](https://gist.github.com/xuechendi/abc45db1231f8b8c8196f3b232963dd4#file-plus_one_code_gen_orc_arrow-java)
+
+When processing orc data with Arrow(pandas_udf), there will be two codegen stages.
+One is before ArrowEval, and one is after.
+So before ArrowEval stage codegen will treat data as columnarBatch, and each row inside columnVector batch will be wrote into sql.catalyst.expressions.codegen.UnsafeRowWriter one by one.
+After ArrowEval, input seems to be row based, (TODO: check inputadapter_input_0.next() for exact data layout)
+
+![orc with arrow stage view](/static/img/2019-04-28-Spark-Sql-Deep-Dive/orc_arrow.png)
+
+***
+
+### CSV
+
+[CSV Generated codes](https://gist.github.com/xuechendi/abc45db1231f8b8c8196f3b232963dd4#file-plus_one_code_gen_csv-java)
+
+1. When using csv(row-based) data, input collection will be processed one row by one row(no batch).
+2. plus one is processed inside JVM as expression, so only one codegen stage created here.
 
 ***
 
 ### CSV with Arrow
 
+[CSV with Arrow Generated codes](https://gist.github.com/xuechendi/abc45db1231f8b8c8196f3b232963dd4#file-plus_one_code_gen_csv_arrow-java)
+
+Also saw two code gen stages as expected, and first codegen treats data as row based, as well as second code gen stage.
+
 ***
+
+### Performance with above four method
+
+![Performance](/static/img/2019-04-28-Spark-Sql-Deep-Dive/performance.jpg)
+
+from the performance, we can tell both python udf eval and row based processing brought overhead, and row based process has higer overhead than python udf eval with Arrow.
 
 ### Data return and after shuffling
 
@@ -117,7 +149,7 @@ final class GeneratedIteratorForCodegenStage1 extends org.apache.spark.sql.execu
 1. Seems spark supported vectorized well if the data can be input as columnar layout.
     1) how about using pandas_udf(Arrow), will there is using vectorized.columnarBatch?
 	2) how csv(row based) data processing looks like?
-2. Seems one call of processNext will process all columnarBatch of this map, varify?
+2. Seems one call of processNext will process all columnarBatch of this map, verify?
 3. what is the return(UnsafeRowWriter) layout?
 4. Adding shuffle to parquet data to check a more complex case.
 
