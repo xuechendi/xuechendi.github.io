@@ -24,4 +24,4 @@ Take below graphs for a visualize example.
 
 ![Spark-Plan-Class-Graph](/static/img/2019-07-11-Spark-WholeStageCodeGen/spark-plan-graph.jpg)
 
-![WholeStageCodeGen-workflow](/static/img/2019-07-11-Spark-WholeStageCodeGen/WholeStageCodeGen-workflow.jpg)
+![WholeStageCodeGen-workflow](/static/img/2019-07-11-Spark-WholeStageCodeGen/wholeStageCodeGen-workflow.jpg)
