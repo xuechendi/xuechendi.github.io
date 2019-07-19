@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Apache Arrow Gandiva on LLVM(Installation)"
+title: "Apache Arrow Gandiva on LLVM(Installation and evaluation)"
 date: 2019-07-12
 categories: [Spark]
-abstract: "Installation of Apache Arrow and Gandiva."
+abstract: "Installation and evaluation of Apache Arrow and Gandiva."
 abstract_img: ""
 ---
 
@@ -59,8 +59,84 @@ apache arrow and gandiva
 cd arrow/cpp/build
 cmake -DARROW_GANDIVA_JAVA=ON -DARROW_GANDIVA=ON ..
 make -j
+make install
+
+# build java
+cd ../java
+# change arrow.cpp.build.dir to the relative path of cpp build dir, 
+# noted: since gandiva is subdir under java, so the relative path should add one more ../
+mvn clean install -P arrow-jni -am -DskipTests -Darrow.cpp.build.dir=../../cpp/build/release
 ```
 
+run test
+``` bash
+mvn test -pl gandiva -P arrow-jni
+```
+
+benchmark
+
+Changed current gandiva MicroBenchmarkTest to a 10 fields * 200 Million records test
+``` java
+ @Test
+  public void testAdd10() throws Exception {
+    Field x = Field.nullable("x", int32);
+    Field n2x = Field.nullable("n2x", int32);
+    Field n3x = Field.nullable("n3x", int32);
+    Field n4x = Field.nullable("n4x", int32);
+    Field n5x = Field.nullable("n5x", int32);
+    Field n6x = Field.nullable("n6x", int32);
+    Field n7x = Field.nullable("n7x", int32);
+    Field n8x = Field.nullable("n8x", int32);
+    Field n9x = Field.nullable("n9x", int32);
+    Field n10x = Field.nullable("n10x", int32);
+
+    // x + n2x + n3x
+    TreeNode add =
+        TreeBuilder.makeFunction(
+            "add", Lists.newArrayList(TreeBuilder.makeField(x), TreeBuilder.makeField(n2x)), int32);
+    TreeNode add1 =
+        TreeBuilder.makeFunction(
+            "add", Lists.newArrayList(add, TreeBuilder.makeField(n3x)), int32);
+    TreeNode add2 =
+        TreeBuilder.makeFunction(
+            "add", Lists.newArrayList(add1, TreeBuilder.makeField(n4x)), int32);
+    TreeNode add3 =
+        TreeBuilder.makeFunction(
+            "add", Lists.newArrayList(add2, TreeBuilder.makeField(n5x)), int32);
+    TreeNode add4 =
+        TreeBuilder.makeFunction(
+            "add", Lists.newArrayList(add3, TreeBuilder.makeField(n6x)), int32);
+    TreeNode add5 =
+        TreeBuilder.makeFunction(
+            "add", Lists.newArrayList(add4, TreeBuilder.makeField(n7x)), int32);
+    TreeNode add6 =
+        TreeBuilder.makeFunction(
+            "add", Lists.newArrayList(add5, TreeBuilder.makeField(n8x)), int32);
+    TreeNode add7 =
+        TreeBuilder.makeFunction(
+            "add", Lists.newArrayList(add6, TreeBuilder.makeField(n9x)), int32);
+    TreeNode add8 =
+        TreeBuilder.makeFunction(
+            "add", Lists.newArrayList(add7, TreeBuilder.makeField(n10x)), int32);
+    ExpressionTree expr = TreeBuilder.makeExpression(add8, x);
+
+    List<Field> cols = Lists.newArrayList(x, n2x, n3x, n4x, n5x, n6x, n7x, n8x, n9x, n10x);
+    Schema schema = new Schema(cols);
+
+    long timeTaken = timedProject(new Int32DataAndVectorGenerator(allocator),
+        schema,
+        Lists.newArrayList(expr),
+        200 * MILLION, 16 * THOUSAND,
+        4);
+    System.out.println("Time taken for projecting 200m records of add10 is " + timeTaken + "ms");
+  }
+
+```
+
+``` bash
+mvn test -pl gandiva -P arrow-jni -Dtest=MicroBenchmarkTest
+```
+![Benchmark result](/static/img/2019-07-12-Apache-Arrow-Gandiva-on-LLVM/benchmark.png)
 ---
 
 
