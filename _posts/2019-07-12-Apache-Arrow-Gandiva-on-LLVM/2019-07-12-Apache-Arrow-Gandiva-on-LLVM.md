@@ -7,7 +7,7 @@ abstract: "Installation and evaluation of Apache Arrow and Gandiva."
 abstract_img: ""
 ---
 
-It spent some time to install gandiva, paste here for future reference.
+It took me some time to install gandiva, paste here for future reference.
 
 llvm-7.0: 
 Arrow Gandiva depends on LLVM, and I noticed current version strictly depends on llvm7.0 if you installed any other version rather than 7.0, it will fail.
