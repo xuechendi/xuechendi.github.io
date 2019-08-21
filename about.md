@@ -56,6 +56,7 @@ Email: xuechendi@gmail.com
 <div style="width:100%;">
 	<div style="padding-left:5%;">
 		<ul>
+		    <li><p>2019</p><p><a href="https://github.com/Intel-bigdata/Spark-PMoF">PMoF Plugin for Spark*</a></p></li>
 		    <li><p>2017</p><p><a href="https://github.com/Intel-bigdata/HDCS">Hyper-converged Distributed Cache Storage(HDCS)</a></p></li>
 			<li><p>2015</p><p><a href="https://github.com/01org/CeTune">Ceph deployment and profiling Tool</a></p></li>
 		</ul>

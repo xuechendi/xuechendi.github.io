@@ -2,7 +2,7 @@
 layout: post
 title: "Apache Arrow Gandiva on LLVM(Installation and evaluation)"
 date: 2019-07-12
-categories: [Spark]
+categories: [Spark, Arrow]
 abstract: "Installation and evaluation of Apache Arrow and Gandiva."
 abstract_img: ""
 ---
@@ -53,6 +53,8 @@ make install
 cmake --version
 cmake version 3.15.0-rc4
 ```
+
+Protobuf version should be above 2.6.0, I used 3.7.1 here, building from source
 
 apache arrow and gandiva
 ``` bash
