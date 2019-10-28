@@ -26,6 +26,7 @@ Email: xuechendi@gmail.com
 	<div style="width:50%;"><p>2014.7 - Present</p><p>Intel</p><p>Software Engineer</p></div>
 	<div style="padding-left:5%;">
 		<ul>
+			<li>Accelerating Spark with Columnar Processing Executions</li>
 			<li>Spark Shuffle Integration and Optimization with Persistent Memory and RDMA</li>
 			<li>Spark on Cloud Storage(S3A) solution and optimization</li>
 			<li>Spark on Kubernetes solution and optimization</li>
