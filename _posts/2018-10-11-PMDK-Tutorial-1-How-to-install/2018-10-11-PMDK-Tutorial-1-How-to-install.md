@@ -21,6 +21,7 @@ step1: PREREQUISITES TO BUILD
 
 ``` bash
 yum install -y autoconf
+yum install -y acsciidoctor 
 ```
 
 * pkg-configure
@@ -53,9 +54,10 @@ cd ..
 
 step2: PMDK INSTALLATION
 ```
+yum install -y pandoc
 git clone https://github.com/pmem/pmdk.git
 cd pmdk
-git checkout tags/1.4.2
+git checkout tags/1.8
 make -j
 make install
 export PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig/:$PKG_CONFIG_PATH
