@@ -21,7 +21,7 @@ step1: PREREQUISITES TO BUILD
 
 ``` bash
 yum install -y autoconf
-yum install -y acsciidoctor 
+yum install -y asciidoctor 
 ```
 
 * pkg-configure
